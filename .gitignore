@@ -3,3 +3,4 @@ dist/
 .env
 coverage/
 arkerfeldt-firebase-adminsdk.json
+*.db
