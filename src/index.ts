@@ -1,13 +1,5 @@
-import express from 'express';
+import { app } from './app';
 
-const app = express();
-
-app.get('', async (req, res) => {
-  res.json({
-    msg: 'hello world',
-  });
-});
-
-app.listen(3000, () => {
-  console.log('ready at http://localhost:3000');
+app.listen(5000, () => {
+  console.log('server read at http://localhost:5000');
 });
