@@ -6,7 +6,6 @@ const util = require('util')
 const NodeEnvironment = require('jest-environment-node');
 const { nanoid } = require('nanoid');
 const exec = util.promisify(require('child_process').exec);
-const dotenv = require('dotenv')
 
 const prismaBinary = path.join(
   __dirname,
@@ -19,9 +18,6 @@ const prismaBinary = path.join(
 class PrismaTestEnvironment extends NodeEnvironment {
   constructor(config) {
     super(config);
-    dotenv.config({
-      path: path.join(process.cwd(), '.env.example')
-    });
     this.dbName = `test_${nanoid()}.db`;
     const dbUrl = `file:${this.dbName}`;
     process.env.DATABASE_URL = dbUrl;

@@ -15,9 +15,12 @@ const serviceAccount = {
   client_x509_cert_url: process.env.CLIENT_X509_CERT_URL,
 };
 
-const admin = Admin.initializeApp({
-  credential: Admin.credential.cert(serviceAccount as { [key: string]: string }),
-  databaseURL: process.env.FIREBASE_DATABASE_URL,
-});
+const admin =
+  process.env.NODE_ENV === 'test'
+    ? Admin.initializeApp()
+    : Admin.initializeApp({
+        credential: Admin.credential.cert(serviceAccount as { [key: string]: string }),
+        databaseURL: process.env.FIREBASE_DATABASE_URL,
+      });
 
 export default admin;
