@@ -6,7 +6,6 @@ export const verifyIdToken = async (idToken: string) => {
   return token.uid;
 };
 
-export const verifyAndGetUserInfo = async (idToken: string): Promise<Admin.auth.UserRecord> => {
-  const token = await admin.auth().verifyIdToken(idToken);
-  return await admin.auth().getUser(token.uid);
+export const verifyAndGetUserInfo = async (uid: string): Promise<Admin.auth.UserRecord> => {
+  return await admin.auth().getUser(uid);
 };

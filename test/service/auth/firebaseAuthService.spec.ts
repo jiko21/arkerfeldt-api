@@ -46,43 +46,23 @@ describe('firebaseAuthService.ts', () => {
 
   describe('verifyAndGetUserInfo', () => {
     it('correctly call', async () => {
-      const TOKEN = '123';
       const UID = 'aaa';
-      verifyIdTokenMock.mockResolvedValueOnce({
-        uid: UID,
-      });
       getUserMock.mockResolvedValueOnce({
         uid: UID,
       });
-      const result = await verifyAndGetUserInfo(TOKEN);
-      expect(verifyIdTokenMock).toHaveBeenCalledWith(TOKEN);
+      const result = await verifyAndGetUserInfo(UID);
       expect(getUserMock).toHaveBeenCalledWith(UID);
       expect(result).toEqual({
         uid: UID,
       });
     });
 
-    it('exception occured in getToken', async () => {
-      const TOKEN = '123';
-      verifyIdTokenMock.mockRejectedValueOnce({ msg: 'error' });
-      try {
-        await verifyIdToken(TOKEN);
-      } catch (e) {
-        expect(verifyIdTokenMock).toHaveBeenCalledWith(TOKEN);
-      }
-    });
-
     it('exception occured in getUser', async () => {
-      const TOKEN = '123';
       const UID = 'aaa';
-      verifyIdTokenMock.mockResolvedValueOnce({
-        uid: UID,
-      });
       getUserMock.mockRejectedValueOnce({ msg: 'error' });
       try {
-        await verifyIdToken(TOKEN);
+        await verifyAndGetUserInfo(UID);
       } catch (e) {
-        expect(verifyIdTokenMock).toHaveBeenCalledWith(TOKEN);
         expect(getUserMock).toHaveBeenCalledWith(UID);
       }
     });
