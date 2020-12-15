@@ -1,6 +1,11 @@
-import { Post } from '@prisma/client';
+import { Post, PostUpdateInput } from '@prisma/client';
 import { Response, Request } from 'express';
-import { findPostById, findPosts, savePost } from '../../../application/usercase/postUsecase';
+import {
+  findPostById,
+  findPosts,
+  savePost,
+  updatePost,
+} from '../../../application/usercase/postUsecase';
 import { PostFilterParam } from '../../../types/Post';
 import { InnerRequest } from './request';
 
@@ -53,6 +58,24 @@ export const createPost = async (
   post.authorId = (req as InnerRequest).uid;
   try {
     await savePost(post);
+    res.json({
+      msg: 'ok',
+    });
+  } catch (e) {
+    res.status(500).json({
+      msg: 'internal_server_error',
+    });
+  }
+};
+
+export const putPost = async (
+  req: Request<{ id: string }, any, PostUpdateInput, any>,
+  res: Response,
+): Promise<void> => {
+  const id = Number(req.params.id);
+  const post = req.body;
+  try {
+    await updatePost(id, post);
     res.json({
       msg: 'ok',
     });

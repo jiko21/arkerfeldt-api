@@ -3,6 +3,7 @@ import {
   findPostById,
   findPosts,
   createPost,
+  updatePost,
 } from '../../../src/infrastructure/datasource/postRepository';
 import { PublishStatus } from '../../../src/types/Post';
 jest.mock('../../../src/infrastructure/datasource/client');
@@ -240,6 +241,56 @@ describe('postRepository.ts', () => {
       } catch (e) {
         expect(createPostMock).toBeCalledWith({
           data: POST,
+        });
+      }
+    });
+  });
+
+  describe('updatePost', () => {
+    let updatePostMock: jest.Mock;
+
+    beforeEach(() => {
+      updatePostMock = jest.fn();
+      prismaClient.post.update = updatePostMock;
+    });
+
+    afterEach(() => {
+      updatePostMock.mockClear();
+    });
+
+    it('correctly calls when post successfully update', async () => {
+      const ID = 1;
+      const postUpdateInput = {
+        title: 'A',
+        content: 'AAA',
+        status: PublishStatus.PUBLISHED,
+      };
+      updatePostMock.mockReturnValueOnce({});
+      await updatePost(ID, postUpdateInput);
+      expect(updatePostMock).toBeCalledWith({
+        where: { id: ID },
+        data: {
+          ...postUpdateInput,
+        },
+      });
+    });
+
+    it('fails when error occured', async () => {
+      const ID = 1;
+      const postUpdateInput = {
+        title: 'A',
+        content: 'AAA',
+        status: PublishStatus.PUBLISHED,
+      };
+      updatePostMock.mockRejectedValue({ msg: 'error' });
+      try {
+        await updatePost(ID, postUpdateInput);
+      } catch (e) {
+        expect(updatePostMock).toBeCalledWith({
+          where: { id: ID },
+          data: {
+            ...postUpdateInput,
+          },
         });
       }
     });

@@ -1,4 +1,4 @@
-import { Post } from '@prisma/client';
+import { Post, PostUpdateInput } from '@prisma/client';
 import * as postRepository from '../../infrastructure/datasource/postRepository';
 import { PostFilterParam } from '../../types/Post';
 
@@ -20,4 +20,8 @@ export const savePost = async (post: Post): Promise<void> => {
     },
   };
   return await postRepository.createPost(postInput);
+};
+
+export const updatePost = async (id: number, postUpdateInput: PostUpdateInput): Promise<void> => {
+  return await postRepository.updatePost(id, postUpdateInput);
 };

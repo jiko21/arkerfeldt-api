@@ -1,4 +1,4 @@
-import { Post, PostCreateInput } from '@prisma/client';
+import { Post, PostCreateInput, PostUpdateInput } from '@prisma/client';
 import { PostFilterParam } from '../../types/Post';
 import { prismaClient } from './client';
 
@@ -33,5 +33,14 @@ export const findPosts = async (params: PostFilterParam): Promise<Post[]> => {
 export const createPost = async (post: PostCreateInput) => {
   await prismaClient.post.create({
     data: post,
+  });
+};
+
+export const updatePost = async (id: number, postUpdateInput: PostUpdateInput) => {
+  await prismaClient.post.update({
+    where: { id },
+    data: {
+      ...postUpdateInput,
+    },
   });
 };

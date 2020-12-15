@@ -7,11 +7,13 @@ import {
   createPost,
   getPostById,
   getPosts,
+  putPost,
 } from '../../../../src/interfaces/api/handler/postHandler';
 
 const findPostsSpy = jest.spyOn(postUsecase, 'findPosts');
 const findPostByIdSpy = jest.spyOn(postUsecase, 'findPostById');
 const savePostSpy = jest.spyOn(postUsecase, 'savePost');
+const updatePostSpy = jest.spyOn(postUsecase, 'updatePost');
 
 describe('postHandler.ts', () => {
   describe('getPosts', () => {
@@ -199,6 +201,56 @@ describe('postHandler.ts', () => {
       savePostSpy.mockRejectedValue(null);
       await createPost(req, res);
       expect(savePostSpy).toBeCalledWith(post);
+      expect(res.status).toBeCalledWith(500);
+      expect(res.json).toBeCalledWith({
+        msg: 'internal_server_error',
+      });
+    });
+  });
+
+  describe('putPost', () => {
+    afterEach(() => {
+      savePostSpy.mockClear();
+      jest.clearAllMocks();
+    });
+
+    it('correctly handle', async () => {
+      const ID_TOKEN = 'aaa';
+      const UID = 'UID';
+      const ID = 1;
+      const post = {
+        title: 'A',
+        content: 'AAA',
+      };
+      const req = createMockReq(ID_TOKEN);
+      req.body = post;
+      req.params.id = `${ID}`;
+      const res = createMockRes();
+      (req as InnerRequest).uid = UID;
+      updatePostSpy.mockResolvedValueOnce();
+      await putPost(req as Request<{ id: string }, any, any, any>, res);
+      expect(updatePostSpy).toBeCalledWith(ID, post);
+      expect(res.json).toBeCalledWith({
+        msg: 'ok',
+      });
+    });
+
+    it('500 when error occured', async () => {
+      const ID_TOKEN = 'aaa';
+      const UID = 'UID';
+      const ID = 1;
+      const post = {
+        title: 'A',
+        content: 'AAA',
+      };
+      const req = createMockReq(ID_TOKEN);
+      req.body = post;
+      req.params.id = `${ID}`;
+      const res = createMockRes();
+      (req as InnerRequest).uid = UID;
+      updatePostSpy.mockRejectedValueOnce(null);
+      await putPost(req as Request<{ id: string }, any, any, any>, res);
+      expect(updatePostSpy).toBeCalledWith(ID, post);
       expect(res.status).toBeCalledWith(500);
       expect(res.json).toBeCalledWith({
         msg: 'internal_server_error',

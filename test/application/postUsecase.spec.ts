@@ -1,4 +1,9 @@
-import { findPostById, findPosts, savePost } from '../../src/application/usercase/postUsecase';
+import {
+  findPostById,
+  findPosts,
+  savePost,
+  updatePost,
+} from '../../src/application/usercase/postUsecase';
 import * as postRepository from '../../src/infrastructure/datasource/postRepository';
 import { PublishStatus } from '../../src/types/Post';
 
@@ -149,6 +154,39 @@ describe('userUsecase.ts', () => {
             },
           },
         });
+      }
+    });
+  });
+
+  describe('updatePost', () => {
+    afterEach(() => {
+      jest.clearAllMocks();
+    });
+
+    it('correctly calls', async () => {
+      const ID = 1;
+      const postUpdateInput = {
+        title: 'A',
+        content: 'AAA',
+        status: PublishStatus.PUBLISHED,
+      };
+      jest.spyOn(postRepository, 'updatePost').mockResolvedValueOnce();
+      await updatePost(ID, postUpdateInput);
+      expect(postRepository.updatePost).toBeCalledWith(ID, postUpdateInput);
+    });
+
+    it('fails when error occured in createUser', async () => {
+      const ID = 1;
+      const postUpdateInput = {
+        title: 'A',
+        content: 'AAA',
+        status: PublishStatus.PUBLISHED,
+      };
+      jest.spyOn(postRepository, 'updatePost').mockRejectedValue({});
+      try {
+        await updatePost(ID, postUpdateInput);
+      } catch (e) {
+        expect(postRepository.updatePost).toBeCalledWith(ID, postUpdateInput);
       }
     });
   });
