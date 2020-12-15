@@ -11,7 +11,7 @@ export const findPostById = async (id: number): Promise<Post | null> => {
   });
 };
 
-export const findPosts = async (params: PostFilterParam): Promise<Post[] | null> => {
+export const findPosts = async (params: PostFilterParam): Promise<Post[]> => {
   return await prismaClient.post.findMany({
     where: {
       AND: [

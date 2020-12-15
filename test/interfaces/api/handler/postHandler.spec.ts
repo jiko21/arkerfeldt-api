@@ -173,7 +173,7 @@ describe('postHandler.ts', () => {
       (req as InnerRequest).uid = UID;
       savePostSpy.mockResolvedValueOnce();
       await createPost(req, res);
-      expect(savePostSpy).toBeCalledWith();
+      expect(savePostSpy).toBeCalledWith(post);
       expect(res.json).toBeCalledWith({
         msg: 'ok',
       });
