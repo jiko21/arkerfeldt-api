@@ -18,13 +18,13 @@ model User {
 }
 
 model Post {
-  id Int @id
+  id Int @id @default(autoincrement())
   title String
   content String
-  createdAt DateTime
-  updatedAt DateTime
-  isDelete Boolean
-  status String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  isDelete Boolean @default(false)
+  status String @default("UNPUBLISHED")
   author User @relation(fields: [authorId], references: [uid])
   authorId String
 }

@@ -12,7 +12,9 @@ export const findPosts = async (params: PostFilterParam): Promise<Post[]> => {
 
 export const savePost = async (post: Post): Promise<void> => {
   const postInput = {
-    ...post,
+    title: post.title,
+    content: post.content,
+    status: post.status,
     author: {
       connect: {
         uid: post.authorId,
