@@ -1,4 +1,4 @@
-import { Post, PostUpdateInput } from '@prisma/client';
+import { Post, PostCreateInput, PostUpdateInput } from '@prisma/client';
 import * as postRepository from '../../infrastructure/datasource/postRepository';
 import { PostFilterParam } from '../../types/Post';
 
@@ -10,14 +10,9 @@ export const findPosts = async (params: PostFilterParam): Promise<Post[]> => {
   return await postRepository.findPosts(params);
 };
 
-export const savePost = async (post: Post): Promise<void> => {
+export const savePost = async (post: PostCreateInput): Promise<void> => {
   const postInput = {
     ...post,
-    author: {
-      connect: {
-        uid: post.authorId,
-      },
-    },
   };
   return await postRepository.createPost(postInput);
 };

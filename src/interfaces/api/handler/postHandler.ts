@@ -54,8 +54,14 @@ export const createPost = async (
   req: Request<any, any, Post, any>,
   res: Response,
 ): Promise<void> => {
-  const post = req.body;
-  post.authorId = (req as InnerRequest).uid;
+  const post = {
+    ...req.body,
+    author: {
+      connect: {
+        uid: (req as InnerRequest).uid,
+      },
+    },
+  };
   try {
     await savePost(post);
     res.json({

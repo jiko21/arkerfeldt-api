@@ -31,9 +31,13 @@ export const findPosts = async (params: PostFilterParam): Promise<Post[]> => {
 };
 
 export const createPost = async (post: PostCreateInput) => {
-  await prismaClient.post.create({
-    data: post,
-  });
+  try {
+    await prismaClient.post.create({
+      data: post,
+    });
+  } catch (e) {
+    console.log(e);
+  }
 };
 
 export const updatePost = async (id: number, postUpdateInput: PostUpdateInput) => {
