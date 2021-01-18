@@ -101,7 +101,7 @@ describe('userUsecase.ts', () => {
     });
   });
 
-  describe('saveUser', () => {
+  describe('savePost', () => {
     afterEach(() => {
       jest.clearAllMocks();
     });
@@ -109,51 +109,37 @@ describe('userUsecase.ts', () => {
     it('correctly calls when user not exists', async () => {
       const uid = 'aaa';
       const post = {
-        id: 1,
         title: 'A',
         content: 'AAA',
-        createdAt: new Date('2020-12-12 12:00:00'),
-        updatedAt: new Date('2020-12-12 12:00:00'),
-        isDelete: false,
         status: PublishStatus.PUBLISHED,
-        authorId: uid,
-      };
-      jest.spyOn(postRepository, 'createPost').mockResolvedValueOnce();
-      await savePost(post);
-      expect(postRepository.createPost).toBeCalledWith({
-        ...post,
         author: {
           connect: {
             uid,
           },
         },
-      });
+      };
+      jest.spyOn(postRepository, 'createPost').mockResolvedValueOnce();
+      await savePost(post);
+      expect(postRepository.createPost).toBeCalledWith(post);
     });
 
-    it('fails when error occured in createUser', async () => {
+    it('fails when error occured in createPost', async () => {
       const uid = 'aaa';
       const post = {
-        id: 1,
         title: 'A',
         content: 'AAA',
-        createdAt: new Date('2020-12-12 12:00:00'),
-        updatedAt: new Date('2020-12-12 12:00:00'),
-        isDelete: false,
         status: PublishStatus.PUBLISHED,
-        authorId: uid,
+        author: {
+          connect: {
+            uid,
+          },
+        },
       };
       jest.spyOn(postRepository, 'createPost').mockRejectedValueOnce({ msg: 'error' });
       try {
         await savePost(post);
       } catch (e) {
-        expect(postRepository.createPost).toBeCalledWith({
-          ...post,
-          author: {
-            connect: {
-              uid,
-            },
-          },
-        });
+        expect(postRepository.createPost).toBeCalledWith(post);
       }
     });
   });

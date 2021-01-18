@@ -167,7 +167,11 @@ describe('postHandler.ts', () => {
         updatedAt: new Date('2020-12-12 12:00:00'),
         isDelete: false,
         status: PublishStatus.PUBLISHED,
-        authorId: 'aaa',
+        author: {
+          connect: {
+            uid: UID,
+          },
+        },
       };
       const req = createMockReq(ID_TOKEN);
       req.body = post;
@@ -192,7 +196,11 @@ describe('postHandler.ts', () => {
         updatedAt: new Date('2020-12-12 12:00:00'),
         isDelete: false,
         status: PublishStatus.PUBLISHED,
-        authorId: 'aaa',
+        author: {
+          connect: {
+            uid: UID,
+          },
+        },
       };
       const req = createMockReq(ID_TOKEN);
       req.body = post;
