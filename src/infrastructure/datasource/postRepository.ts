@@ -1,6 +1,6 @@
-import { Post, PostCreateInput, PostUpdateInput } from '@prisma/client';
 import { PostFilterParam } from '../../types/Post';
 import { prismaClient } from './client';
+import { Post, PostCreateInput, PostUpdateInput } from "../../generated/client";
 
 export const findPostById = async (id: number): Promise<Post | null> => {
   return await prismaClient.post.findOne({
