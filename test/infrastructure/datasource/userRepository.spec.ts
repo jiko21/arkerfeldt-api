@@ -2,17 +2,26 @@ import { prismaClient } from '../../../src/infrastructure/datasource/client';
 import { createUser, findUserByUid } from '../../../src/infrastructure/datasource/userRepository';
 jest.mock('../../../src/infrastructure/datasource/client');
 
+jest.mock('../../../src/infrastructure/datasource/client', () => ({
+  prismaClient: {
+    user: {
+      findFirst: jest.fn(),
+      create: jest.fn(),
+    }
+  }
+}));
+
 describe('userRepository.ts', () => {
   describe('findUserByUid', () => {
-    let findOneMock: jest.Mock;
+    let findFirstMock: jest.Mock;
 
     beforeEach(() => {
-      findOneMock = jest.fn();
-      prismaClient.user.findOne = findOneMock;
+      findFirstMock = jest.fn();
+      prismaClient.user.findFirst = findFirstMock;
     });
 
     afterEach(() => {
-      findOneMock.mockClear();
+      findFirstMock.mockClear();
     });
 
     it('correctly calls when user exists', async () => {
@@ -22,10 +31,10 @@ describe('userRepository.ts', () => {
         displayName: 'taro',
         photoUrl: 'aaa',
       };
-      findOneMock.mockReturnValueOnce(EXPECTED);
+      findFirstMock.mockReturnValueOnce(EXPECTED);
       const actual = await findUserByUid(UID);
       expect(actual).toBe(EXPECTED);
-      expect(findOneMock).toBeCalledWith({
+      expect(findFirstMock).toBeCalledWith({
         where: {
           uid: UID,
         },
@@ -34,10 +43,10 @@ describe('userRepository.ts', () => {
 
     it('correctly calls when user not exists', async () => {
       const UID = 'abc';
-      findOneMock.mockReturnValueOnce(null);
+      findFirstMock.mockReturnValueOnce(null);
       const actual = await findUserByUid(UID);
       expect(actual).toBe(null);
-      expect(findOneMock).toBeCalledWith({
+      expect(findFirstMock).toBeCalledWith({
         where: {
           uid: UID,
         },
@@ -46,11 +55,11 @@ describe('userRepository.ts', () => {
 
     it('fails when error occured', async () => {
       const UID = 'abc';
-      findOneMock.mockRejectedValue({ msg: 'error' });
+      findFirstMock.mockRejectedValue({ msg: 'error' });
       try {
         await findUserByUid(UID);
       } catch (e) {
-        expect(findOneMock).toBeCalledWith({
+        expect(findFirstMock).toBeCalledWith({
           where: {
             uid: UID,
           },
