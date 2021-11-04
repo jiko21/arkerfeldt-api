@@ -2,7 +2,6 @@
   "verbose": true,
   "preset": "ts-jest",
   "coverageDirectory": "coverage",
-  "testEnvironment": "<rootDir>/prisma/testEnvironment.js",
   "transform": {
     "^.+\\.ts$": "ts-jest"
   },

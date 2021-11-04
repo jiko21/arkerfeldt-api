@@ -6,15 +6,25 @@ import {
   updatePost,
 } from '../../../src/infrastructure/datasource/postRepository';
 import { PublishStatus } from '../../../src/types/Post';
-jest.mock('../../../src/infrastructure/datasource/client');
+
+jest.mock('../../../src/infrastructure/datasource/client', () => ({
+  prismaClient: {
+    post: {
+      findFirst: jest.fn(),
+      findMany: jest.fn(),
+    }
+  }
+}));
 
 describe('postRepository.ts', () => {
   describe('findPostById', () => {
     let findOneMock: jest.Mock;
 
     beforeEach(() => {
+      const post = {};
+      Object.defineProperty(prismaClient, 'post', post);
       findOneMock = jest.fn();
-      prismaClient.post.findOne = findOneMock;
+      prismaClient.post.findFirst = findOneMock;
     });
 
     afterEach(() => {
@@ -61,7 +71,7 @@ describe('postRepository.ts', () => {
       });
     });
 
-    it('fails when error occured', async () => {
+    it('fails when error occurred', async () => {
       const ID = 1;
       findOneMock.mockRejectedValue({ msg: 'error' });
       try {
