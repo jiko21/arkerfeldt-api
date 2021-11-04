@@ -5,3 +5,4 @@ coverage/
 arkerfeldt-firebase-adminsdk.json
 *.db
 src/generated/client/query-*
+.idea/
