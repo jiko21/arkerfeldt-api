@@ -14,7 +14,6 @@ export const saveUserHandler = async (req: Request, res: Response): Promise<void
     });
   } catch (e) {
     res.status(500).json({
-      status: 500,
       msg: 'internal_server_error',
     });
   }
