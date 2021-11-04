@@ -1,6 +1,8 @@
 import * as postRepository from '../../infrastructure/datasource/postRepository';
 import { PostFilterParam } from '../../types/Post';
-import { Post, PostCreateInput, PostUpdateInput } from "../../generated/client";
+import { Post, Prisma } from "../../generated/client";
+import PostCreateInput = Prisma.PostCreateInput;
+import PostUpdateInput = Prisma.PostUpdateInput;
 
 export const findPostById = async (id: number): Promise<Post | null> => {
   return await postRepository.findPostById(id);
