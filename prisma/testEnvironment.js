@@ -1,19 +1,13 @@
 // test env for prisma
 // https://github.com/prisma/prisma-examples/blob/latest/typescript/testing-express/prisma/prisma-test-environment.js
-const path = require('path')
-const fs = require('fs')
-const util = require('util')
+const path = require('path');
+const fs = require('fs');
+const util = require('util');
 const NodeEnvironment = require('jest-environment-node');
 const { nanoid } = require('nanoid');
 const exec = util.promisify(require('child_process').exec);
 
-const prismaBinary = path.join(
-  __dirname,
-  '..',
-  'node_modules',
-  '.bin',
-  'prisma'
-);
+const prismaBinary = path.join(__dirname, '..', 'node_modules', '.bin', 'prisma');
 
 class PrismaTestEnvironment extends NodeEnvironment {
   constructor(config) {

@@ -1,4 +1,3 @@
-import { Post, PostUpdateInput } from '@prisma/client';
 import { Response, Request } from 'express';
 import {
   findPostById,
@@ -6,6 +5,7 @@ import {
   savePost,
   updatePost,
 } from '../../../application/usercase/postUsecase';
+import { Post, PostUpdateInput } from '../../../generated/client';
 import { PostFilterParam } from '../../../types/Post';
 import { InnerRequest } from './request';
 
