@@ -1,0 +1,9 @@
+description: returns when request is unauthorized
+content:
+  application/json:
+    schema:
+      type: object
+      properties:
+        msg:
+          type: string
+          example: forbidden

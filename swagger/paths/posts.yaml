@@ -1,0 +1,23 @@
+get:
+  summary: get posts
+  tags:
+    - posts
+  responses:
+    '200':
+      description: returns when request was SUCCESS
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              total:
+                type: number
+                example: 10
+              posts:
+                type: array
+                items:
+                  $ref: "../components/post.yaml"
+    '403':
+      $ref: "../components/forbidden.yaml"
+    '500':
+      $ref: "../components/server_error.yaml"

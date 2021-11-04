@@ -1,0 +1,4 @@
+/api/users:
+  $ref: './users.yaml'
+/api/posts:
+  $ref: './posts.yaml'

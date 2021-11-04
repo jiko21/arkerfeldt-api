@@ -1,0 +1,9 @@
+description: returns when internal server error
+content:
+  application/json:
+    schema:
+      type: object
+      properties:
+        msg:
+          type: string
+          example: 'internal_server_error'

@@ -1,0 +1,20 @@
+type: object
+properties:
+  id:
+    type: number
+  title:
+    type: string
+  content:
+    type: string
+  createdAt:
+    type: string
+    format: date-time
+  updatedAt:
+    type: string
+    format: date-time
+  isDelete:
+    type: boolean
+  status:
+    type: string
+  authorId:
+    type: string

@@ -1,0 +1,31 @@
+post:
+  summary: save userinfo
+  tags:
+    - users
+  requestBody:
+    description: Optional description in *Markdown*
+    required:
+      - msg
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            msg:
+              type: string
+              example: ok
+  responses:
+    '200':
+      description: returns when request was SUCCESS
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              msg:
+                type: string
+                example: ok
+    '403':
+      $ref: "../components/forbidden.yaml"
+    '500':
+      $ref: "../components/server_error.yaml"
