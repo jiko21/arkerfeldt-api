@@ -5,9 +5,10 @@ import {
   savePost,
   updatePost,
 } from '../../../application/usercase/postUsecase';
-import { Post, PostUpdateInput } from '../../../generated/client';
+import { Post, Prisma } from "../../../generated/client";
 import { PostFilterParam } from '../../../types/Post';
 import { InnerRequest } from './request';
+import PostUpdateInput = Prisma.PostUpdateInput;
 
 export const getPosts = async (
   req: Request<any, any, any, PostFilterParam>,
