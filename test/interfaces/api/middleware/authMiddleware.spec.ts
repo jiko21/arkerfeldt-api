@@ -20,9 +20,9 @@ describe('authMiddleware.ts', () => {
       const UID = 'bbb';
       const req = createMockReq(ID_TOKEN);
       const res = createMockRes();
-      jest.spyOn(authService, 'verifyIdToken').mockResolvedValueOnce(UID);
+      jest.spyOn(authService, 'verifySessionCookie').mockResolvedValueOnce(UID);
       await authMiddleware(req, res, nextMock);
-      expect(authService.verifyIdToken).toHaveBeenCalledWith(ID_TOKEN);
+      expect(authService.verifySessionCookie).toHaveBeenCalledWith(ID_TOKEN);
       expect(nextMock).toHaveBeenCalled();
       expect(res.status).not.toBeCalled();
       expect(res.send).not.toBeCalled();
@@ -32,11 +32,11 @@ describe('authMiddleware.ts', () => {
       const ID_TOKEN = 'aaa';
       const req = createMockReq(ID_TOKEN);
       const res = createMockRes();
-      jest.spyOn(authService, 'verifyIdToken').mockRejectedValue(null);
+      jest.spyOn(authService, 'verifySessionCookie').mockRejectedValue(null);
       try {
         await authMiddleware(req, res, nextMock);
       } catch (e) {
-        expect(authService.verifyIdToken).toHaveBeenCalledWith(ID_TOKEN);
+        expect(authService.verifySessionCookie).toHaveBeenCalledWith(ID_TOKEN);
         expect(nextMock).not.toHaveBeenCalled();
         expect(res.status).not.toBeCalledWith(403);
         expect(res.send).toBeCalled();
@@ -45,11 +45,11 @@ describe('authMiddleware.ts', () => {
     it('should correctly return 403 when auth header is noe', async () => {
       const req = createMockReq(undefined);
       const res = createMockRes();
-      jest.spyOn(authService, 'verifyIdToken').mockRejectedValue(null);
+      jest.spyOn(authService, 'verifySessionCookie').mockRejectedValue(null);
       try {
         await authMiddleware(req, res, nextMock);
       } catch (e) {
-        expect(authService.verifyIdToken).not.toBeCalled();
+        expect(authService.verifySessionCookie).not.toBeCalled();
         expect(nextMock).not.toHaveBeenCalled();
         expect(res.status).toBeCalledWith(403);
         expect(res.send).toBeCalled();

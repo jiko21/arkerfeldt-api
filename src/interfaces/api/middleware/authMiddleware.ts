@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { verifyIdToken, verifySessionCookie } from "../../../service/auth/firebaseAuthService";
+import { verifySessionCookie } from "../../../service/auth/firebaseAuthService";
 import { InnerRequest } from '../handler/request';
 
 export const authMiddleware = async (req: Request, res: Response, next: NextFunction) => {
