@@ -12,11 +12,11 @@ exports.Prisma = Prisma
 
 /**
  * Prisma Client JS version: 2.30.3
- * Query Engine version: 89facabd0366f63911d089156a7a70125bfbcd27
+ * Query Engine version: b8c35d44de987a9691890b3ddf3e2e7effb9bf20
  */
 Prisma.prismaVersion = {
   client: "2.30.3",
-  engine: "89facabd0366f63911d089156a7a70125bfbcd27"
+  engine: "b8c35d44de987a9691890b3ddf3e2e7effb9bf20"
 }
 
 Prisma.PrismaClientKnownRequestError = () => {
@@ -90,6 +90,11 @@ exports.Prisma.PostScalarFieldEnum = makeEnum({
 exports.Prisma.SortOrder = makeEnum({
   asc: 'asc',
   desc: 'desc'
+});
+
+exports.Prisma.QueryMode = makeEnum({
+  default: 'default',
+  insensitive: 'insensitive'
 });
 
 
