@@ -45,7 +45,7 @@
     "jest-environment-node": "26.6.2",
     "jest-mock-extended": "2.0.4",
     "js-yaml": "3.14.1",
-    "nanoid": "3.1.18",
+    "nanoid": "3.1.32",
     "nodemon": "2.0.6",
     "prettier": "2.4.1",
     "prisma": "2.30.3",
