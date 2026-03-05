@@ -46,7 +46,7 @@
     "jest-mock-extended": "2.0.4",
     "js-yaml": "4.1.0",
     "nanoid": "3.2.0",
-    "nodemon": "2.0.15",
+    "nodemon": "2.0.22",
     "prettier": "2.5.1",
     "prisma": "2.30.3",
     "supertest": "6.2.2",
